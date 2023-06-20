@@ -21,7 +21,7 @@ type FormValues = {
   interval: number;
 };
 
-export default function DeployedPoll() {
+export default function PollForm() {
   const {
     handleSubmit,
     register,
@@ -38,7 +38,6 @@ export default function DeployedPoll() {
       },
     });
     const { poll } = await response.json();
-    console.log(poll);
   }
 
   const formData = {
@@ -66,7 +65,6 @@ export default function DeployedPoll() {
       <FormControl isInvalid={errors?.sourceApi ? true : false}>
         <FormLabel htmlFor={formData.sapi.id}>{formData.sapi.label}</FormLabel>
         <Input
-          required
           placeholder={formData.sapi.placeholder}
           {...register("sourceApi", {
             required: true,
@@ -80,7 +78,6 @@ export default function DeployedPoll() {
         <Input
           placeholder={formData.dwh.placeholder}
           {...register("destinationWebhook", {
-            required: true,
             pattern: {
               value: /^https?:\/\//i,
               message: "Must be a valid url.",
