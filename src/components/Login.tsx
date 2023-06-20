@@ -10,7 +10,6 @@ const Login: FC<{ session: DefaultSession | null }> = ({ session }) => {
         <button onClick={() => signOut()} type="button">
           Sign Out of Google
         </button>
-        Pass session info to server component
       </>
     );
   } else {

@@ -55,3 +55,10 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Poll {
+  id                 String @id @default(cuid())
+  sourceApi          String
+  destinationWebhook String
+  interval           Int    @default(5)
+}
