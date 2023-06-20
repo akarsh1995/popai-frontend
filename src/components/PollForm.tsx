@@ -29,8 +29,16 @@ export default function DeployedPoll() {
     formState: { errors, isSubmitting },
   } = useForm<FormValues>();
 
-  function onSubmit(values: FormValues) {
-    console.log(values);
+  async function onSubmit(values: FormValues) {
+    const response = await fetch("/api/poll/create", {
+      method: "POST",
+      body: JSON.stringify(values),
+      headers: {
+        "Content-Type": "application/json; charset=utf8",
+      },
+    });
+    const { poll } = await response.json();
+    console.log(poll);
   }
 
   const formData = {

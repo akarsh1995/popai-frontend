@@ -46,6 +46,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  polls         Poll[]
 }
 
 model VerificationToken {
@@ -61,4 +62,6 @@ model Poll {
   sourceApi          String
   destinationWebhook String
   interval           Int    @default(5)
+  userId             String
+  user               User   @relation(fields: [userId], references: [id])
 }
