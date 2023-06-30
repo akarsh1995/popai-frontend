@@ -8,13 +8,16 @@ const handler = withAuth(async (req) => {
     data: { userId: req.nextauth.token?.sub, ...data },
   });
 
-  const deploy_poll = await fetch("http://127.0.0.1:8000/poll/create", {
-    body: JSON.stringify(poll),
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json; charset=utf8",
-    },
-  });
+  const deploy_poll = await fetch(
+    `${process.env.NEXT_PUBLIC_POLLING_SERVER_ENDPOINT}/poll/create`,
+    {
+      body: JSON.stringify(poll),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf8",
+      },
+    }
+  );
   if (deploy_poll.status === 200) {
     return NextResponse.json({ poll });
   } else {

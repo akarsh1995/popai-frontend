@@ -26,7 +26,10 @@ export const PollCardHolder: FC<{ polls: Poll[] }> = ({ polls }) => {
     setStatuses((old) => ({ ...old, [up.pollId]: up }));
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8000/poll/status");
+    const url = `ws://${
+      process.env.NEXT_PUBLIC_POLLING_SERVER_ENDPOINT?.split("//")[1]
+    }/poll/status`;
+    const ws = new WebSocket(url);
 
     ws.addEventListener("open", () => {
       polls.map((poll) => ws.send(JSON.stringify({ id: poll.id })));
