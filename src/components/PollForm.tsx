@@ -37,7 +37,16 @@ export default function PollForm() {
         "Content-Type": "application/json; charset=utf8",
       },
     });
-    const { poll } = await response.json();
+    if (response.status === 200) {
+      const { poll } = await response.json();
+    } else if (response.status === 400) {
+      const { poll } = await response.json();
+      Object.keys(poll).forEach((key: any) => {
+        if (poll[key] !== null) {
+          setError(key, { type: "validate", message: poll[key] });
+        }
+      });
+    }
   }
 
   const formData = {
@@ -68,7 +77,10 @@ export default function PollForm() {
           placeholder={formData.sapi.placeholder}
           {...register("sourceApi", {
             required: true,
-            pattern: { value: /^https?/i, message: "Must be a valid url." },
+            pattern: {
+              value: /^https?:\/\//i,
+              message: "Must be a valid url.",
+            },
           })}
         />
         <FormErrorMessage>{errors?.sourceApi?.message}</FormErrorMessage>
